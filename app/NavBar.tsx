@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import React from "react";
 import { usePathname } from "next/navigation";
 import { PiBugDuotone } from "react-icons/pi";
 import classNames from "classnames";
