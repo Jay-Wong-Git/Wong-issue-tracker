@@ -4,7 +4,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { PiBugDuotone } from "react-icons/pi";
 import classNames from "classnames";
-import { Box, Container, Flex } from "@radix-ui/themes";
+import {
+  Avatar,
+  Box,
+  Container,
+  DropdownMenu,
+  Flex,
+  Text,
+} from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
 
 const NavBar = () => {
@@ -16,12 +23,12 @@ const NavBar = () => {
   ];
 
   return (
-    <nav className="px-5 py-4 mb-5 border-b h-14">
+    <nav className="px-5 py-4 mb-5 border-b h-15">
       <Container>
         <Flex justify="between" align="center">
           <Flex align="center" gap="3">
             <Link href="/">
-              <PiBugDuotone />
+              <PiBugDuotone size="25" transform="rotate(-45)" />
             </Link>
             <ul className="flex space-x-6">
               {links.map((link) => (
@@ -42,7 +49,24 @@ const NavBar = () => {
           </Flex>
           <Box>
             {status === "authenticated" && (
-              <Link href="/api/auth/signout">Logout</Link>
+              <DropdownMenu.Root>
+                <DropdownMenu.Trigger className="cursor-pointer">
+                  <Avatar
+                    src={session.user!.image!}
+                    fallback="?"
+                    radius="full"
+                    size="2"
+                  />
+                </DropdownMenu.Trigger>
+                <DropdownMenu.Content>
+                  <DropdownMenu.Label>
+                    <Text>{session.user!.email}</Text>
+                  </DropdownMenu.Label>
+                  <DropdownMenu.Item>
+                    <Link href="/api/auth/signout">Logout</Link>
+                  </DropdownMenu.Item>
+                </DropdownMenu.Content>
+              </DropdownMenu.Root>
             )}
             {status === "unauthenticated" && (
               <Link href="/api/auth/signin">Login</Link>
