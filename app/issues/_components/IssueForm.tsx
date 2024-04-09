@@ -8,17 +8,14 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
-import dynamic from "next/dynamic";
+import SimpleMDE from "react-simplemde-editor";
 
 import { Spinner, ErrorMessage } from "@/app/components";
 
 import { issueSchema } from "@/app/validationSchemas";
 import { Issue } from "@prisma/client";
 
-const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
-  ssr: false,
-});
-type IssueData = z.infer<typeof issueSchema>;
+type IssueFormData = z.infer<typeof issueSchema>;
 
 const IssueForm = ({ issue }: { issue?: Issue }) => {
   const {
@@ -26,7 +23,7 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<IssueData>({
+  } = useForm<IssueFormData>({
     resolver: zodResolver(issueSchema),
   });
   const router = useRouter();
@@ -36,8 +33,10 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
   const onSubmit = handleSubmit(async (data) => {
     try {
       setIsSubmitting(true);
-      await axios.post("/api/issues", data);
+      if (issue) await axios.patch(`/api/issues/${issue.id}`, data);
+      else await axios.post("/api/issues", data);
       router.push("/issues");
+      router.refresh(); // disable client-side cache
     } catch (error) {
       setError("An unexpected error occurred.");
     } finally {

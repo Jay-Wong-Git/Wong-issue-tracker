@@ -45,4 +45,7 @@ const IssuesPage = async () => {
   );
 };
 
+export const dynamic = "force-dynamic"; // disable server-side cache
+// export const revalidate = 30;
+
 export default IssuesPage;

@@ -1,10 +1,12 @@
-import { Skeleton } from "@/app/components";
-import { Box, Card, Flex } from "@radix-ui/themes";
+import { IssueStatusBadge, Skeleton } from "@/app/components";
+import { Heading, Flex, Card, Text } from "@radix-ui/themes";
+import React from "react";
+import ReactMarkdown from "react-markdown";
 
 const LoadingIssueDetailPage = () => {
   return (
-    <Box>
-      <Skeleton width="6rem" />
+    <>
+      <Skeleton width="4rem" />
       <Flex gap="3" my="2">
         <Skeleton width="3rem" />
         <Skeleton width="8rem" />
@@ -12,7 +14,7 @@ const LoadingIssueDetailPage = () => {
       <Card className="prose mt-5">
         <Skeleton count={5} />
       </Card>
-    </Box>
+    </>
   );
 };
 
