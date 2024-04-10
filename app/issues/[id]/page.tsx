@@ -7,6 +7,8 @@ import { DeleteIssueButton, EditIssueButton, IssueDetails } from "./";
 import authOptions from "@/app/auth/authOptions";
 import AssigneeSelect from "./AssigneeSelect";
 import IssueStatusUpdater from "./IssueStatusUpdater";
+import { Metadata } from "next";
+import { describe } from "node:test";
 
 interface Props {
   params: {
@@ -42,3 +44,10 @@ const IssueDetailPage = async ({ params }: Props) => {
 };
 
 export default IssueDetailPage;
+
+export async function generateMetadata({ params }: Props) {
+  const issue = await prisma.issue.findUnique({
+    where: { id: parseInt(params.id) },
+  });
+  return { title: issue?.title, description: issue?.description };
+}

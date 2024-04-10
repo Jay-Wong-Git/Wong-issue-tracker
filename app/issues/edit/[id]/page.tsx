@@ -2,6 +2,7 @@ import prisma from "@/prisma/client";
 import { notFound } from "next/navigation";
 import dynamic from "next/dynamic";
 import IssueFormSkeleton from "./loading";
+import { Metadata } from "next";
 
 interface Props {
   params: { id: string };
@@ -21,3 +22,10 @@ const EditIssuePage = async ({ params }: Props) => {
 };
 
 export default EditIssuePage;
+
+export async function generateMetadata({ params }: Props) {
+  const issue = await prisma.issue.findUnique({
+    where: { id: parseInt(params.id) },
+  });
+  return { title: issue?.title, description: issue?.description };
+}

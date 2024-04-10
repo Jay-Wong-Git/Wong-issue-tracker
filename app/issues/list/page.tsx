@@ -5,6 +5,7 @@ import prisma from "@/prisma/client";
 import { Status } from "@prisma/client";
 import IssueActions from "./IssueActions";
 import IssueTable, { columnNames, IssueQuery } from "./IssueTable";
+import { Metadata } from "next";
 
 interface Props {
   searchParams: IssueQuery;
@@ -47,3 +48,8 @@ export const dynamic = "force-dynamic"; // disable server-side cache
 // export const revalidate = 30;
 
 export default IssuesPage;
+
+export const metadata: Metadata = {
+  title: "Wong Issue Tracker - List",
+  description: "List of project issues.",
+};
