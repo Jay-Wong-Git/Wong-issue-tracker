@@ -1,3 +1,4 @@
+import { Status } from "@prisma/client";
 import { z } from "zod";
 
 export const issueSchema = z.object({
@@ -22,6 +23,7 @@ export const patchIssueSchema = z.object({
     .min(1, "Description is required.")
     .max(65535, "Description length should not be more than 65535 chars.")
     .optional(),
+  status: z.enum([Status.OPEN, Status.IN_PROGRESS, Status.CLOSED]).optional(),
   assignedToUserId: z
     .string()
     .min(1, "AssignedToUserId is required.")
