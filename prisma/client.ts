@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
 const prismaClientSingleton = () => {
+  // return new PrismaClient({ log: ["query"] });  // 打印查询日志
   return new PrismaClient();
 };
 
