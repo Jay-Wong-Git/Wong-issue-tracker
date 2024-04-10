@@ -8,6 +8,11 @@ import React from "react";
 import toast from "react-hot-toast";
 
 const IssueStatusUpdater = ({ issue }: { issue: Issue }) => {
+  const statuses: { label: string; value: Status }[] = [
+    { label: "Open", value: "OPEN" },
+    { label: "In Progress", value: "IN_PROGRESS" },
+    { label: "Closed", value: "CLOSED" },
+  ];
   const router = useRouter();
   const updateIssueStatus = (status: Status) => {
     axios
@@ -21,13 +26,15 @@ const IssueStatusUpdater = ({ issue }: { issue: Issue }) => {
 
   return (
     <Select.Root defaultValue={issue.status} onValueChange={updateIssueStatus}>
-      <Select.Trigger placeholder="Status..." />
+      <Select.Trigger placeholder="Update status..." />
       <Select.Content>
         <Select.Group>
           <Select.Label>Current Status</Select.Label>
-          <Select.Item value={Status.OPEN}>Open</Select.Item>
-          <Select.Item value={Status.IN_PROGRESS}>In Progress</Select.Item>
-          <Select.Item value={Status.CLOSED}>Closed</Select.Item>
+          {statuses.map((status) => (
+            <Select.Item key={status.value} value={status.value}>
+              {status.label}
+            </Select.Item>
+          ))}
         </Select.Group>
       </Select.Content>
     </Select.Root>
