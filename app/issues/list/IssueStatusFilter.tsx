@@ -16,8 +16,8 @@ const IssueStatusFilter = () => {
   const router = useRouter();
 
   const filterIssue = (status: Status) => {
-    const queryString = status ? `/?status=${status}` : "";
-    router.push("/issues/list" + queryString);
+    const query = status ? `/?status=${status}` : "";
+    router.push("/issues/list" + query);
   };
 
   return (
